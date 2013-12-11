@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+# Trap interrupts to quit cleanly while booting.
+Signal.trap('INT') { exit 1 }
+
+require 'forematter'
+
+begin
+  Forematter.run(ARGV)
+rescue Interrupt
+  $stderr.puts 'Quitting'
+  exit 1
+end
