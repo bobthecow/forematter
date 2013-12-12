@@ -15,7 +15,7 @@ module Forematter::Commands
     def run
       files_with(field).each do |file|
         old = file[field].to_ruby
-        fail "#{field} is not an array" unless old.is_a?(Array)
+        log_skip(file, "#{field} is not an array") && next unless old.is_a?(Array)
 
         # Continue unless old contains elements of values
         next if (old & values).empty?

@@ -17,7 +17,7 @@ module Forematter::Commands
 
       files_with(field).each do |file|
         old = file[field].to_ruby
-        fail "#{field} is not an array" unless old.is_a?(Array)
+        log_skip(file, "#{field} is not an array") && next unless old.is_a?(Array)
 
         # Continue unless unless field had one of the values to remove
         next if (old & dups).empty?

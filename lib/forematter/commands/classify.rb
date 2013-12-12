@@ -29,8 +29,14 @@ module Forematter::Commands
       load_classifier
 
       puts 'Getting categories'
-      categories_for(files_with(field)).each do |cat|
-        bayes.add_category(cat.to_sym)
+      categories_for(files_with(field)).each { |cat| bayes.add_category(cat) }
+
+      if bayes.categories.empty?
+        $stderr.puts "No categories found in #{field}, unable to classify"
+        exit 1
+      else
+        found = bayes.categories.length
+        puts "#{found} #{found == 1 ? 'category' : 'categories'} found"
       end
 
       puts 'Training classifier'
@@ -54,7 +60,11 @@ module Forematter::Commands
     end
 
     def categories_for(files)
-      files.map { |file| file[field].to_ruby }.reject(&:nil?).uniq
+      files
+        .map { |file| file[field].to_ruby }
+        .select { |f| f.is_a?(String) }
+        .uniq
+        .map(&:to_sym)
     end
 
     def files_to_classify
@@ -65,7 +75,10 @@ module Forematter::Commands
 
     def train(file)
       val = file[field].to_ruby
-      fail 'Unable to classify by non-string fields' unless val.is_a?(String)
+      unless val.is_a?(String)
+        skip file, "unable to train, #{field} is not a string"
+        return
+      end
       bayes.train(val.to_sym, file.content)
     end
 

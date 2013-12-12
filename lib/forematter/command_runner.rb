@@ -4,15 +4,24 @@ module Forematter
   class CommandRunner < ::Cri::CommandRunner
     def call
       run
+      exit 1 if @has_error
     rescue UsageException
-      path = [command.supercommand]
-      path.unshift(path[0].supercommand) until path[0].nil?
-      super_usage = path[1..-1].map { |c| c.name + ' ' }.join
       $stderr.puts "usage: #{super_usage}#{command.usage}"
       exit 1
     end
 
     protected
+
+    def log_skip(file, msg)
+      $stderr.puts "#{super_usage}#{command.name}: #{file.filename}: #{msg}"
+      @has_error = 1
+    end
+
+    def super_usage
+      path = [command.supercommand]
+      path.unshift(path[0].supercommand) until path[0].nil?
+      path[1..-1].map { |c| c.name + ' ' }.join
+    end
 
     def field
       partition

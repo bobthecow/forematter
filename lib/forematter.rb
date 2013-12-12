@@ -25,6 +25,9 @@ module Forematter
   class UsageException < Exception
   end
 
+  class UnexpectedValue < Exception
+  end
+
   class << self
     attr_reader   :root_command
     # attr_accessor :verbose
