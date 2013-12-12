@@ -10,7 +10,7 @@ EOS
 module Forematter::Commands
   class List < Forematter::CommandRunner
     def run
-      puts tags.uniq.sort_by(&:downcase).join("\n")
+      puts tags.uniq.compact.map(&:to_s).sort_by(&:downcase).join("\n")
     end
 
     protected
