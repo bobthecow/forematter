@@ -18,8 +18,8 @@ module Forematter::Commands
   class Add < Forematter::CommandRunner
     def run
       files.each do |file|
-        old = file[field].to_ruby || []
         fail "#{field} is not an array" unless old.is_a?(Array)
+        old = file.key?(field) ? file[field].to_ruby : []
         add = options[:'allow-dupes'] ? values : values.select { |v| !old.include?(v) }
         next if add.empty?
         add.each { |v| old << v }
