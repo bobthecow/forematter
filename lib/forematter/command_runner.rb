@@ -5,7 +5,7 @@ module Forematter
     def call
       run
       exit 1 if @has_error
-    rescue UsageException
+    rescue Forematter::UsageError
       $stderr.puts "usage: #{super_usage}#{command.usage}"
       exit 1
     end
@@ -25,27 +25,27 @@ module Forematter
 
     def field
       partition
-      fail UsageException, 'Missing field name' unless @field
+      fail Forematter::UsageError, 'Missing field name' unless @field
       @field
     end
 
     def value
       fail 'ARGS!' unless command.value_args == :one
       partition
-      fail UsageException, 'Missing argument' unless @value
+      fail Forematter::UsageError, 'Missing argument' unless @value
       @value
     end
 
     def values
       fail 'ARGS!' unless command.value_args == :many
       partition
-      fail UsageException, 'Missing argument' if @values.empty?
+      fail Forematter::UsageError, 'Missing argument' if @values.empty?
       @values
     end
 
     def files
       partition
-      fail UsageException, 'No file(s) specified' if @files.empty?
+      fail Forematter::UsageError, 'No file(s) specified' if @files.empty?
       @files
     end
 
@@ -65,7 +65,7 @@ module Forematter
 
     def wrap_file(filename)
       Forematter::FileWrapper.new(filename)
-    rescue Forematter::NoSuchFile => e
+    rescue Forematter::NoSuchFileError => e
       $stderr.puts "#{super_usage}#{command.name}: #{filename}: No such file"
       @has_error = 1
       nil

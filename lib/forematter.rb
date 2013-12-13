@@ -22,13 +22,16 @@ module Forematter
   module Commands
   end
 
-  class UsageException < Exception
+  class Error < RuntimeError
   end
 
-  class UnexpectedValue < Exception
+  class UsageError < ArgumentError
   end
 
-  class NoSuchFile < Exception
+  class UnexpectedValueError < Error
+  end
+
+  class NoSuchFileError < Error
   end
 
   class << self

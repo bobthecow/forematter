@@ -27,7 +27,7 @@ module Forematter::Commands
         old = file[field].to_ruby
         begin
           val = cleanup(old)
-        rescue Forematter::UnexpectedValue => e
+        rescue Forematter::UnexpectedValueError => e
           log_skip(file, e.message) && next
         end
         unless val == old
@@ -51,7 +51,7 @@ module Forematter::Commands
     def cleanup(val)
       val = val.dup
       return cleanup_array(val) if val.is_a?(Array)
-      fail Forematter::UnexpectedValue, "#{field} is not an array" if options[:sort]
+      fail Forematter::UnexpectedValueError, "#{field} is not an array" if options[:sort]
       options.keys.each do |option|
         val = val.method(CLEANUP_MAP[option]).call if CLEANUP_MAP.key?(option) && options[option]
       end
