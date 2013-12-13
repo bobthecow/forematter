@@ -5,7 +5,7 @@ module Forematter
     extend Forwardable
 
     def initialize(filename)
-      fail Forematter::UnexpectedValue, "File not found: #{filename}" unless File.file?(filename)
+      fail Forematter::NoSuchFile unless File.file?(filename)
       @filename = filename
     end
 

@@ -28,6 +28,9 @@ module Forematter
   class UnexpectedValue < Exception
   end
 
+  class NoSuchFile < Exception
+  end
+
   class << self
     attr_reader   :root_command
     # attr_accessor :verbose

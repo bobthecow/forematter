@@ -59,8 +59,16 @@ module Forematter
       @field = args.shift
       @value = args.shift               if command.value_args == :one
       @values, args = guess_split(args) if command.value_args == :many
-      @files = args.map { |f| Forematter::FileWrapper.new(f) }
+      @files = args.map { |f| wrap_file(f) }.compact
       @args_partitioned = true
+    end
+
+    def wrap_file(filename)
+      Forematter::FileWrapper.new(filename)
+    rescue Forematter::NoSuchFile => e
+      $stderr.puts "#{super_usage}#{command.name}: #{filename}: No such file"
+      @has_error = 1
+      nil
     end
 
     def guess_split(args)
