@@ -24,20 +24,21 @@ module Forematter::Commands
       require 'titleize'
 
       files_with(field).each do |file|
-        old = file[field].to_ruby
-        begin
-          val = cleanup(old)
-        rescue Forematter::UnexpectedValueError => e
-          log_skip(file, e.message) && next
-        end
-        unless val == old
-          file[field] = val
-          file.write
-        end
+        cleanup_file(file)
       end
     end
 
     protected
+
+    def cleanup_file(file)
+      old = file[field].to_ruby
+      val = cleanup(old)
+      return if val == old
+      file[field] = val
+      file.write
+    rescue Forematter::UnexpectedValueError => e
+      log_skip(file, e.message)
+    end
 
     CLEANUP_MAP = {
       downcase:   :downcase,

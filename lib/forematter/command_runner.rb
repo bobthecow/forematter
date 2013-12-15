@@ -65,7 +65,7 @@ module Forematter
 
     def wrap_file(filename)
       Forematter::FileWrapper.new(filename)
-    rescue Forematter::NoSuchFileError => e
+    rescue Forematter::NoSuchFileError
       $stderr.puts "#{super_usage}#{command.name}: #{filename}: No such file"
       @has_error = 1
       nil

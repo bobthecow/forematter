@@ -27,23 +27,9 @@ module Forematter::Commands
   class Classify < Forematter::CommandRunner
     def run
       load_classifier
-
-      puts 'Getting categories'
-      categories_for(files_with(field)).each { |cat| bayes.add_category(cat) }
-
-      if bayes.categories.empty?
-        $stderr.puts "No categories found in #{field}, unable to classify"
-        exit 1
-      else
-        found = bayes.categories.length
-        puts "#{found} #{found == 1 ? 'category' : 'categories'} found"
-      end
-
-      puts 'Training classifier'
-      files_with(field).each { |file| train(file) }
-
-      puts 'Classifying files'
-      files_to_classify.each { |file| file.write if classify(file) }
+      add_categories
+      train_classifier
+      classify_files
     end
 
     protected
@@ -53,6 +39,29 @@ module Forematter::Commands
     rescue LoadError
       $stderr.puts 'Install "classifier" gem to generate suggestions'
       exit 1
+    end
+
+    def add_categories
+      puts 'Finding categories'
+      categories_for(files_with(field)).each { |cat| bayes.add_category(cat) }
+
+      if bayes.categories.empty?
+        $stderr.puts "No categories found in #{field}, unable to classify"
+        exit 1
+      else
+        found = bayes.categories.length
+        puts "#{found} #{found == 1 ? 'category' : 'categories'} found"
+      end
+    end
+
+    def train_classifier
+      puts 'Training classifier'
+      files_with(field).each { |file| train(file) }
+    end
+
+    def classify_files
+      puts 'Classifying files'
+      files_to_classify.each { |file| file.write if classify(file) }
     end
 
     def bayes
