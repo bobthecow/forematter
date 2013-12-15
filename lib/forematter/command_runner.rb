@@ -6,14 +6,14 @@ module Forematter
       run
       exit 1 if @has_error
     rescue Forematter::UsageError
-      $stderr.puts "usage: #{super_usage}#{command.usage}"
+      $stderr.puts "usage: #{super_usage}#{command.usage}".color(:red)
       exit 1
     end
 
     protected
 
     def log_skip(file, msg)
-      $stderr.puts "#{super_usage}#{command.name}: #{file.filename}: #{msg}"
+      $stderr.puts "#{super_usage}#{command.name}: #{file.filename}: #{msg}".color(:red)
       @has_error = 1
     end
 
@@ -66,7 +66,7 @@ module Forematter
     def wrap_file(filename)
       Forematter::FileWrapper.new(filename)
     rescue Forematter::NoSuchFileError
-      $stderr.puts "#{super_usage}#{command.name}: #{filename}: No such file"
+      $stderr.puts "#{super_usage}#{command.name}: #{filename}: No such file".color(:red)
       @has_error = 1
       nil
     end

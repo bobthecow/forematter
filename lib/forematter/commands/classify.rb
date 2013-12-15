@@ -37,7 +37,7 @@ module Forematter::Commands
     def load_classifier
       require 'classifier'
     rescue LoadError
-      $stderr.puts 'Install "classifier" gem to generate suggestions'
+      $stderr.puts 'Install "classifier" gem to generate suggestions'.color(:red)
       exit 1
     end
 
@@ -46,7 +46,7 @@ module Forematter::Commands
       categories_for(files_with(field)).each { |cat| bayes.add_category(cat) }
 
       if bayes.categories.empty?
-        $stderr.puts "No categories found in #{field}, unable to classify"
+        $stderr.puts "No categories found in #{field}, unable to classify".color(:red)
         exit 1
       else
         found = bayes.categories.length
