@@ -32,6 +32,9 @@ module Forematter
   class UsageError < ArgumentError
   end
 
+  class AmbiguousArgumentError < UsageError
+  end
+
   class UnexpectedValueError < Error
   end
 

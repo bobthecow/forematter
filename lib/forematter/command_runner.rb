@@ -5,6 +5,10 @@ module Forematter
     def call
       run
       exit 1 if @has_error
+    rescue Forematter::AmbiguousArgumentError
+      $stderr.puts "Ambiguous arguments. Use '--' to separate values from files, like this:".red
+      $stderr.puts "'#{super_usage}#{command.name} <field> <value> [<value>...] -- <file> [<file>...]'".red
+      exit 1
     rescue Forematter::UsageError
       $stderr.puts "usage: #{super_usage}#{command.usage}".red
       exit 1
@@ -13,7 +17,8 @@ module Forematter
     protected
 
     def log_skip(file, msg)
-      $stderr.puts "#{super_usage}#{command.name}: #{file.filename}: #{msg}".red
+      filename = file.respond_to?(:filename) ? file.filename : file
+      $stderr.puts "#{super_usage}#{command.name}: #{filename}: #{msg}".red
       @has_error = true
     end
 

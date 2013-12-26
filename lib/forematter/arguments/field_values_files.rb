@@ -14,21 +14,29 @@ module Forematter::Arguments
 
     def partition
       @args_partitioned ||= begin
-        @values, @filenames = guess_split
+        @values, @filenames = split_args
         true
       end
     end
 
-    def guess_split
-      # TODO: use arguments.raw once cri 2.5.0 ships.
-      args = arguments[1..-1] || []
+    def split_args
+      args = arguments.raw[1..-1] || []
+      split_on_divider(args) || guess_split(args)
+    end
+
+    def split_on_divider(args)
       if (i = args.index('--'))
-        [args[0..i], args[i..-1]]
-      else
-        files = []
-        files.unshift(args.pop) while !args.empty? && File.exist?(args.last)
-        [args, files]
+        files = args[(i + 1)..-1]
+        fail Forematter::AmbiguousArgumentError if files.include?('--') # There can be only one
+        [args[0..i], files]
       end
+    end
+
+    def guess_split(args)
+      files = []
+      files.unshift(args.pop) while args.length > 1 && File.file?(args.last)
+      fail Forematter::AmbiguousArgumentError if args.any? { |v| File.file?(v) }
+      [args, files]
     end
   end
 end
