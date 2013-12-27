@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-value_args  :none
+usage       'count <field> <file> [<file>...]'
 summary     'count values in a field'
 description <<-EOS
 Count the number of times each value of a given field appears in a set of files.
@@ -8,6 +8,8 @@ EOS
 
 module Forematter::Commands
   class Count < Forematter::CommandRunner
+    include Forematter::Arguments::FieldFiles
+
     def run
       counts = tags.reduce({}) { |a, e| a.merge(e => (a[e] || 0) + 1) }
       fmt    = format(counts)

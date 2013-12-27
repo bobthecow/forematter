@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-value_args  :none
+usage       'classify [options] <field> <file> [<file>...]'
 aliases     :categorize
 summary     'classify files by the given field'
 description <<-EOS
@@ -25,6 +25,8 @@ flag nil, :override, 'Override existing values'
 
 module Forematter::Commands
   class Classify < Forematter::CommandRunner
+    include Forematter::Arguments::FieldFiles
+
     def run
       load_classifier
       add_categories

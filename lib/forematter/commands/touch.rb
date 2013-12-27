@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-value_args  :none
-summary     'update a field timestamp'
+usage   'touch [options] <field> <file> [<file>...]'
+summary 'update a field timestamp'
 
 i = "\xC2\xA0" * 4
 description <<-EOS
@@ -34,6 +34,8 @@ required :f, :format, 'timestamp format (default: iso8601)'
 
 module Forematter::Commands
   class Touch < Forematter::CommandRunner
+    include Forematter::Arguments::FieldFiles
+
     def run
       files_with(field).each do |file|
         file[field] = now

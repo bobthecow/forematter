@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-value_args  :many
+usage       'remove <field> <value> [<value>...] <file> [<file>...]'
 aliases     :rm
 summary     'remove values from a field'
 description <<-EOS
@@ -12,6 +12,8 @@ EOS
 
 module Forematter::Commands
   class Remove < Forematter::CommandRunner
+    include Forematter::Arguments::FieldValuesFiles
+
     def run
       files_with(field).each do |file|
         old = file[field].to_ruby

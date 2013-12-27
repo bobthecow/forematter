@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-value_args  :none
+usage       'list <field> <file> [<file>...]'
 aliases     :ls
 summary     'list values for a field'
 description <<-EOS
@@ -9,6 +9,8 @@ EOS
 
 module Forematter::Commands
   class List < Forematter::CommandRunner
+    include Forematter::Arguments::FieldFiles
+
     def run
       puts tags.uniq.compact.map(&:to_s).sort_by(&:downcase).join("\n")
     end

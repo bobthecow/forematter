@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-usage   'fore command [options] [arguments]'
+usage   'fore <command> [options] [arguments]'
 summary 'Forematter, the frontmatter-aware friend for your static site'
 
 flag :h, :help, 'show the help message and quit' do |value, cmd|

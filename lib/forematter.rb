@@ -14,10 +14,13 @@ require 'colored'
 # forematter
 require 'forematter/version'
 require 'forematter/core_ext'
-require 'forematter/cri_ext'
 require 'forematter/frontmatter'
 require 'forematter/file_wrapper'
 require 'forematter/command_runner'
+require 'forematter/arguments/files'
+require 'forematter/arguments/field_files'
+require 'forematter/arguments/field_value_files'
+require 'forematter/arguments/field_values_files'
 
 module Forematter
   module Commands
@@ -71,7 +74,6 @@ module Forematter
     def load_command_at(filename, command_name = nil)
       Cri::Command.define(File.read(filename), filename).modify do
         name command_name || File.basename(filename, '.rb')
-        auto_usage
       end
     end
   end

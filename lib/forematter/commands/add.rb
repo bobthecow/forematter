@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-value_args  :many
+usage       'add [options] <field> <value> [<value>...] <file> [<file>...]'
 summary     'add values to a field'
 description <<-EOS
 Add values to a frontmatter field in to a set of files.
@@ -16,6 +16,8 @@ flag nil, :'allow-dupes', 'allow duplicate values'
 
 module Forematter::Commands
   class Add < Forematter::CommandRunner
+    include Forematter::Arguments::FieldValuesFiles
+
     def run
       files.each do |file|
         old = file.key?(field) ? file[field].to_ruby : []

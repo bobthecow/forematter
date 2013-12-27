@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-value_args  :none
+usage       'cleanup [options] <field> <file> [<file>...]'
 summary     'clean up a field'
 description <<-EOS
 Normalize values in a frontmatter field in a set of files.
@@ -19,6 +19,8 @@ flag nil, :url,        'sluggify'
 
 module Forematter::Commands
   class Cleanup < Forematter::CommandRunner
+    include Forematter::Arguments::FieldFiles
+
     def run
       require 'stringex_lite'
       require 'titleize'

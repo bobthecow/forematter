@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-value_args  :many
+usage       'merge <field> <value> [<value>...] <file> [<file>...]'
 summary     'combine multiple values for a field'
 description <<-EOS
 Combine multiple values for a frontmatter field in a set of files.
@@ -11,6 +11,8 @@ EOS
 
 module Forematter::Commands
   class Merge < Forematter::CommandRunner
+    include Forematter::Arguments::FieldValuesFiles
+
     def run
       dups      = values.dup
       canonical = dups.shift

@@ -1,7 +1,6 @@
 # encoding: utf-8
 
-value_args  :one
-value_name  'pattern'
+usage       'search [options] <field> <pattern> <file> [<file>...]'
 summary     'search for values in a field'
 description <<-EOS
 Search for values for a given frontmatter field in a set of files.
@@ -15,6 +14,8 @@ flag nil, :print0,               'list file names followed by an ASCII NUL chara
 
 module Forematter::Commands
   class Search < Forematter::CommandRunner
+    include Forematter::Arguments::FieldValueFiles
+
     def run
       files_with(field).sort_by(&:filename).each do |file|
         field_val = file[field].to_ruby

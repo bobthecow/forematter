@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-value_args  :none
+usage       'suggest [options] <field> <file> [<file>...]'
 summary     'suggest values for a field'
 description <<-EOS
 Suggest values for a given frontmatter field based on other files in a set.
@@ -10,6 +10,8 @@ flag nil, :override, 'Override existing values'
 
 module Forematter::Commands
   class Suggest < Forematter::CommandRunner
+    include Forematter::Arguments::FieldFiles
+
     def run
       load_classifier
 
