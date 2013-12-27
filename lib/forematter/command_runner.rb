@@ -14,7 +14,7 @@ module Forematter
 
     def log_skip(file, msg)
       $stderr.puts "#{super_usage}#{command.name}: #{file.filename}: #{msg}".red
-      @has_error = 1
+      @has_error = true
     end
 
     def super_usage

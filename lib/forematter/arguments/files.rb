@@ -23,7 +23,7 @@ module Forematter::Arguments
       Forematter::FileWrapper.new(filename)
     rescue Forematter::NoSuchFileError
       $stderr.puts "#{super_usage}#{command.name}: #{filename}: No such file".color(:red)
-      @has_error = 1
+      @has_error = true
       nil
     end
   end
