@@ -31,13 +31,13 @@ If you're not running a Ruby version manager, you might need to use `sudo gem in
 Forematter makes it easy to add tags I forgot:
 
 ```bash
-$ find . -name "*twitter*.markdown" | xargs fore add tags twitter
+$ find . -name "*twitter*.md" | xargs fore add tags twitter
 ```
 
 And find all of my dumb:
 
 ```bash
-$ find . -name "*twitter*.markdown" | xargs fore list tags | grep -i tw
+$ find . -name "*twitter*.md" | xargs fore list tags | grep -i tw
 ```
 
 > Twitpocalypse  
@@ -47,8 +47,8 @@ $ find . -name "*twitter*.markdown" | xargs fore list tags | grep -i tw
 ... whoops. Let's fix that:
 
 ```bash
-$ fore merge tags Twitter twitter *.markdown
-$ find . -name "*twitter*.markdown" | xargs fore list tags | grep -i tw
+$ fore merge tags Twitter twitter *.md
+$ find . -name "*twitter*.md" | xargs fore list tags | grep -i tw
 ```
 
 > Twitpocalypse  
@@ -63,16 +63,16 @@ Forematter lets me automatically categorize all my blog posts, based on the tags
 
 ```bash
 # Grab the 10 most common tags from my blog
-for c in $(fore count tags *.markdown | tail -10 | sort -r | awk '{print($2)}'); do
+for c in $(fore count tags *.md | tail -10 | sort -r | awk '{print($2)}'); do
   # Set the category on each article with one of these tags
-  fore search -l tags "$c" *.markdown | xargs fore set category "$c"
+  fore search -l tags "$c" *.md | xargs fore set category "$c"
 end
 
 # Format categories as title case
-fore cleanup category --titlecase *.markdown
+fore cleanup category --titlecase *.md
 
 # Automatically classify all articles which don't already have a category
-fore classify category *.markdown
+fore classify category *.md
 ```
 
 It does a lot more, too:
