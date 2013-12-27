@@ -8,7 +8,7 @@ module Forematter
 
     def key?(key)
       data.children.each_index do |i|
-        next unless i % 2
+        next unless i.even?
         return true if data.children[i].to_ruby == key
       end
 
@@ -18,7 +18,7 @@ module Forematter
 
     def [](key)
       data.children.each_index do |i|
-        next unless i % 2
+        next unless i.even?
         return data.children[i + 1] if data.children[i].to_ruby == key
       end
       nil
@@ -26,7 +26,7 @@ module Forematter
 
     def []=(key, val)
       data.children.each_index do |i|
-        next unless i % 2
+        next unless i.even?
         if data.children[i].to_ruby == key
           data.children[i + 1] = thunk(val, data.children[i + 1])
           return
@@ -39,7 +39,7 @@ module Forematter
 
     def delete(key)
       data.children.each_index do |i|
-        next unless i % 2
+        next unless i.even?
         if data.children[i].to_ruby == key
           val = data.children.delete_at(i + 1)
           data.children.delete_at(i)
@@ -50,7 +50,7 @@ module Forematter
 
     def rename(key, new_key)
       data.children.each_index do |i|
-        next unless i % 2
+        next unless i.even?
         if data.children[i].to_ruby == key
           data.children[i].value = new_key
           return
