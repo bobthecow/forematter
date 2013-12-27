@@ -1,6 +1,9 @@
-# v0.1.2-dev
+# v0.2.0-dev
 
  * Handle "no such file" more gracefully.
+ * Add a `fields` command.
+ * Prettier usage error output.
+ * Fix possible bug searching frontmatter hashes.
 
 
 # v0.1.1
