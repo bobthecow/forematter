@@ -78,6 +78,9 @@ fore classify category *.md
 It does a lot more, too:
 
 ```bash
+fore fields                        content/*.md
+fore rename   categories tags      content/*.md
+
 fore add      tags   foo bar       content/*.md
 fore remove   tags   bacon         content/*.md
 fore merge    tags   foo Foo       content/*.md
