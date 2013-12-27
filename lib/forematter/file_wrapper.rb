@@ -11,7 +11,7 @@ module Forematter
 
     attr_reader :filename
 
-    def_delegators :meta, :key?, :has_key?, :[], :[]=, :delete, :rename
+    def_delegators :meta, :keys, :key?, :has_key?, :[], :[]=, :delete, :rename
 
     def to_s
       "#{meta.to_yaml}---\n#{content}"

@@ -56,7 +56,7 @@ module Forematter
     def partition
       return if @args_partitioned
       args = arguments.dup
-      @field = args.shift
+      @field = args.shift               unless command.no_field_arg
       @value = args.shift               if command.value_args == :one
       @values, args = guess_split(args) if command.value_args == :many
       @files = args.map { |f| wrap_file(f) }.compact

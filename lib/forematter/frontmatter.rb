@@ -6,6 +6,15 @@ module Forematter
       init_stream(input)
     end
 
+    def keys
+      ret = []
+      data.children.each_index do |i|
+        next unless i.even?
+        ret << data.children[i].to_ruby
+      end
+      ret
+    end
+
     def key?(key)
       data.children.each_index do |i|
         next unless i.even?
