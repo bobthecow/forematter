@@ -9,7 +9,7 @@ require 'json'
 
 # third party
 require 'cri'
-require 'rainbow'
+require 'colored'
 
 # forematter
 require 'forematter/version'

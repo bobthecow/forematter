@@ -29,7 +29,7 @@ module Forematter::Commands
     def load_classifier
       require 'classifier'
     rescue LoadError
-      $stderr.puts 'Install "classifier" gem to generate suggestions'.color(:red)
+      $stderr.puts 'Install "classifier" gem to generate suggestions'.red
       exit 1
     end
 

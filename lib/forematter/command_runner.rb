@@ -6,14 +6,14 @@ module Forematter
       run
       exit 1 if @has_error
     rescue Forematter::UsageError
-      $stderr.puts "usage: #{super_usage}#{command.usage}".color(:red)
+      $stderr.puts "usage: #{super_usage}#{command.usage}".red
       exit 1
     end
 
     protected
 
     def log_skip(file, msg)
-      $stderr.puts "#{super_usage}#{command.name}: #{file.filename}: #{msg}".color(:red)
+      $stderr.puts "#{super_usage}#{command.name}: #{file.filename}: #{msg}".red
       @has_error = 1
     end
 

@@ -23,7 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'cri', '~> 2.4'
   spec.add_dependency 'stringex'
   spec.add_dependency 'titleize'
-  spec.add_dependency 'rainbow'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
